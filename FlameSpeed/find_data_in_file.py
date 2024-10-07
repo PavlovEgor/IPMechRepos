@@ -10,7 +10,7 @@ def find_data_in_file(filename, n) -> np.array:
                 file.readline()
                 file.readline()
 
-                for i in range(1000):
+                for i in range(n):
 
                     line = file.readline()
                     tmp[i] = float(line.rstrip())
