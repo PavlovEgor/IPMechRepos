@@ -23,7 +23,7 @@ def make_concentration_CH4_H2_air(phi=1, xi=0.05):
     Y = [0] * 4
     for i in range(4):
         Y[i] = X[i] * M[i] / (X_CH4*M_CH4 + X_H2*M_H2 + X_O2*M_O2 + X_N2*M_N2)
-        print(f'Y_{name[i]}   ', Y[i], ';')
+        print(f'    volScalarFieldValue {name[i]}   ', Y[i])
 
 
 def make_concentration_CH4_air(phi=1):
@@ -45,7 +45,7 @@ def make_concentration_CH4_air(phi=1):
     Y = [0] * 3
     for i in range(3):
         Y[i] = X[i] * M[i] / (X_CH4*M_CH4 + X_O2*M_O2 + X_N2*M_N2)
-        print(f'Y_{name[i]}   ', Y[i], ';')
+        print(f'    volScalarFieldValue {name[i]}   ', Y[i])
 
 
-make_concentration_CH4_H2_air(phi=1, xi=0.05)
+make_concentration_CH4_H2_air(phi=1.0, xi=0.00)

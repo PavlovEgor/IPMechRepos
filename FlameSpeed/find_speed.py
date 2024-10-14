@@ -1,9 +1,12 @@
 import numpy as np
+from scipy import interpolate
 
 
 def der(t, x) -> np.array:
-    dy = np.diff(x)
-    dx = np.diff(t)
-    derivative = dy / dx
 
-    return derivative
+    tck = interpolate.splrep(t, x)
+
+    return interpolate.splev(t, tck, der=1)
+
+
+

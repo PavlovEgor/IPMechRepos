@@ -12,10 +12,10 @@ def plot_time_flame_coordinate(x, y, field_name):
 
 
 def plot_time_flame_speed(x, y, field_name, left_t_lim=0, right_t_lim=np.infty):
-
-    plt.plot(*find_interesting_interval(x[1:], 100*der(x, y), left_t_lim, right_t_lim))
+    nx, ny = find_interesting_interval(x, 100*der(x, y), left_t_lim, right_t_lim)
+    plt.plot(nx, ny)
     plt.xlabel('Время, с')
     plt.ylabel('Скорость пламени, cм/с')
-    plt.title(f'Зависимость скорости пламени от времени по {field_name}')
+    plt.title(f'Зависимость скорости пламени от времени по {field_name} \n средняя скорость {np.mean(ny)}')
 
 
