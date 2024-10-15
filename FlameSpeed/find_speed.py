@@ -8,5 +8,3 @@ def der(t, x) -> np.array:
 
     return interpolate.splev(t, tck, der=1)
 
-
-

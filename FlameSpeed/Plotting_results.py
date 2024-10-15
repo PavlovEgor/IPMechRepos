@@ -18,4 +18,3 @@ def plot_time_flame_speed(x, y, field_name, left_t_lim=0, right_t_lim=np.infty):
     plt.ylabel('Скорость пламени, cм/с')
     plt.title(f'Зависимость скорости пламени от времени по {field_name} \n средняя скорость {np.mean(ny)}')
 
-
