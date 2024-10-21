@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def find_slope(data, n) -> float:
+def find_slope(data, dx) -> float:
 
     # Вычисление производной
     derivative = np.diff(data)
@@ -10,6 +10,6 @@ def find_slope(data, n) -> float:
     max_derivative_index = np.argmax(np.abs(derivative))
 
     # Координата скачка
-    jump_coordinate = max_derivative_index / n
+    jump_coordinate = dx * max_derivative_index
 
     return jump_coordinate
