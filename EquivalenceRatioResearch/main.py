@@ -77,9 +77,9 @@ path_of_template = path + '/ClTemplate'
 prefix = 'Cl'
 
 # Phi = [0.85, 0.9, 0.95, 1.0, 1.05, 1.1, 1.15, 1.2]
-Phi = [0.85, 0.95, 1.05, 1.15]
+# Phi = [0.85, 0.95, 1.05, 1.15]
 xi = 0.3
-# Phi = [0.8]
+Phi = [0.8]
 
 for phi in Phi:
 
