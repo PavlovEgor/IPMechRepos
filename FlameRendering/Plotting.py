@@ -9,13 +9,11 @@ import numpy as np
 from Data import Data
 
 
-
 class Plotting:
     def __init__(self, path_of_case: str, dim: int, shape_of_mesh=(0, 0), figsize=(12, 8)):
         self.path_of_case = path_of_case
         self.dim = dim
         self.figsize = figsize
-
         self.Data = Data(path_of_case, dim, shape_of_mesh)
 
     def plot_time_flame_coordinate(self, left_t_lim=0, right_t_lim=np.inf, scale=1):
@@ -53,8 +51,12 @@ class Plotting:
 
         if self.dim == 1:
             x = np.arange(field.shape[0]) * scale
-
             ax.plot(x, field)
+
+        elif self.dim == 2:
+            x, y = np.mgrid[:field.shape[0], :field.shape[1]]
+            pos = ax.imshow(field, cmap='Reds', interpolation='none')
+            fig.colorbar(pos, ax=ax)
 
         return ax
 
@@ -63,9 +65,9 @@ class Plotting:
         ax.set_xlabel(xlabel)
         ax.set_ylabel(ylabel)
 
-path = r'C:\Users\Mi\Documents\PycharmProjects\IPMechRepos'
-time_name = '1D_time_moment'
-P = Plotting(path, 1)
-ax = P.plot_field_in_time_moment(time_name, 'H2O')
-# P.create_legend(ax, 'gg', 'ff', 'yy')
-plt.show()
+# path = r'C:\Users\Mi\Documents\PycharmProjects\IPMechRepos'
+# time_name = '2D_time_moment'
+# P = Plotting(path, 2, shape_of_mesh=(70, 4000))
+# ax = P.plot_field_in_time_moment(time_name, 'H2O')
+# # P.create_legend(ax, 'gg', 'ff', 'yy')
+# plt.show()
