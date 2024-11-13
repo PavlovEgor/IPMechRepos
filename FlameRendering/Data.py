@@ -19,7 +19,7 @@ class Data:
                 print("In 2D mesh don't specified shape of mesh")
 
     def load_field_in_time_moment(self, time_name: str, field_name: str) -> np.array:
-        field = Ofpp.parse_internal_field(self.path_of_case + '\\' + time_name + '\\' + field_name)
+        field = Ofpp.parse_internal_field(self.path_of_case + '/' + time_name + '/' + field_name)
 
         if type(field) == float:  # uniform field
             if self.dim != 1:

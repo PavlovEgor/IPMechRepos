@@ -25,15 +25,16 @@ class Animation:
 
         elif self.dim == 2:
             # x, y = np.mgrid[:field.shape[0], :field.shape[1]]
-            pos = ax.contourf(field)
-            fig.colorbar(pos, cax=cax)
+            # pos = ax.contourf(field, cmap='Reds')
+            pos = ax.imshow(field, cmap='Reds', interpolation='bilinear')
+            fig.colorbar(pos, cax=cax, orientation="horizontal")
 
 
     def make_amine(self, field_name: str, scale=1):
         fig = plt.figure(figsize=self.figsize)
         ax = fig.add_subplot(111)
         div = make_axes_locatable(ax)
-        cax = div.append_axes('right', '5%', '5%')
+        cax = div.append_axes('bottom', size="50%", pad=0.25)
 
         T, T_name = self.Data.find_time()
 
