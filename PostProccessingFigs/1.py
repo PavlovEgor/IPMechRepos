@@ -4,84 +4,91 @@ import pandas as pd
 
 path = '/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/3D/75CH4-25H2-air-6-step3D_DyM'
 
+class PastProcessingData:
 
-Data = pd.DataFrame({'Time': np.array([]),
+    def __init__(self):
+        self.Data = pd.DataFrame({'Time': np.array([]),
                      'FlamaArea': np.array([]),
                      'Qdot_integral': np.array([]),
                      'WallHeatFlux': np.array([])})
 
-def read_AFlame_volIntegrate(file_path):
-    T = []
-    S = []
+    def plot_flame_area_t(self):
+        plt.plot(self.Data['Time'].array, self.Data['FlamaArea'].array)
+        plt.show()
 
-    with open(file_path) as file:
-        while line := file.readline():
-            if line[0] == '#':
-                continue
+    def plot_Qdot_t(self):
+        plt.plot(self.Data['Time'].array, self.Data['Qdot_integral'].array)
+        plt.show()
 
-            else:
-                t, s = list(map(float, line.split()))
-                T.append(t)
-                S.append(s)
-    file.close()
-    return np.array(T), np.array(S)
+    def read_two_column_data_file(self, filename):
+        X = []
+        Y = []
 
-
-def read_Qdot_volIntegrate(file_path):
-    T = []
-    Q = []
-
-    with open(file_path) as file:
-        while line := file.readline():
-            if line[0] == '#':
-                continue
-
-            else:
-                t, q = list(map(float, line.split()))
-                T.append(t)
-                Q.append(q)
-    file.close()
-    return np.array(T), np.array(Q)
-
-def read_wallHeatFlux1(file_path):
-    T = []
-    H = []
-    patches = []
-
-    def find_patches():
-        with open(file_path) as file:
+        with open(filename) as file:
             while line := file.readline():
                 if line[0] == '#':
                     continue
 
                 else:
-                    t, patch, min_, max_, h = line.split()
+                    x, y = list(map(float, line.split()))
+                    X.append(x)
+                    Y.append(y)
+        file.close()
+        return np.array(X), np.array(Y)
 
-                    if patch in patches:
-                        file.close()
-                        break
+    def read_AFlame_volIntegrate(self, filename):
+        self.Data["Time"], self.Data["FlamaArea"] = self.read_two_column_data_file(filename)
+
+    def read_Qdot_volIntegrate(self, filename):
+        self.Data["Time"], self.Data["Qdot_integral"] = self.read_two_column_data_file(filename)
+
+    def read_wallHeatFlux1(file_path):
+        T = []
+        H = []
+        patches = []
+
+        def find_patches():
+            with open(file_path) as file:
+                while line := file.readline():
+                    if line[0] == '#':
+                        continue
+
                     else:
-                        patches.append(patch)
+                        t, patch, min_, max_, h = line.split()
 
-    find_patches()
-    with open(file_path) as file:
+                        if patch in patches:
+                            file.close()
+                            break
+                        else:
+                            patches.append(patch)
 
-        while line := file.readline():
-            if line[0] == '#':
-                continue
+        find_patches()
+        with open(file_path) as file:
 
-            else:
-                h_tmp = 0
-                for i in range(len(patches)):
-                    t, patch, min_, max_, h = line.split()
-                    h_tmp += float(h)
-                T.append(float(t))
-                H.append(h_tmp)
+            while line := file.readline():
+                if line[0] == '#':
+                    continue
 
-    return np.array(T), np.array(H)
+                else:
+                    h_tmp = 0
+                    for i in range(len(patches)):
+                        try:
+                            t, patch, min_, max_, h = line.split()
+                            print(t)
+                            h_tmp += float(h)
+                            line = file.readline()
+                        except Exception:
+                            break
+
+                    T.append(float(t))
+                    H.append(h_tmp)
+
+        return np.array(T), np.array(H)
 
 
-T, H = read_wallHeatFlux1('/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/3D/75CH4-25H2-air-6-step3D_DyM/postProcessing/wallHeatFlux1/0.00900758/wallHeatFlux_0.00900758.dat')
 
-plt.plot(T, H)
-plt.show()
+
+D = PastProcessingData()
+D.read_AFlame_volIntegrate('/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/3D/75CH4-25H2-air-6-step3D_DyM/postProcessing/AFlame_volIntegrate/0.00900758/volFieldValue_0.00900758.dat')
+D.plot_flame_area_t()
+print(D.Data["Time"], D.Data["FlamaArea"])
