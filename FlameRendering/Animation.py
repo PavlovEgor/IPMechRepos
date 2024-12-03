@@ -44,3 +44,4 @@ class Animation:
 
         ani = animation.FuncAnimation(fig, update_frame, frames=len(T) - 1, repeat=False)
         plt.show()
+        # ani.save('myAnimation.gif', writer='imagemagick', fps=30)

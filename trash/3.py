@@ -14,17 +14,17 @@ def find_slope(data: np.array, dx: float) -> (float, float):  # find mean max Q_
     return jump_coordinate, ampl
 
 
-shp = (70, 4000)
+shp = (110, 4000)
 
-V=Ofpp.parse_internal_field('Qdot')
+V=Ofpp.parse_internal_field('/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/2D/Hele-Shaw/l=200mm,w=5.5mm/ClPhi=1.0Xi=1e-6/0.00279971/Qdot')
 V = V.reshape(shp)
 
-x, y = find_slope(V, 0.05)
-print(x)
-t = np.zeros(shp)
-
-t.T[int(x / 0.05)] = 2*y*np.ones(70)
-V += t
+# x, y = find_slope(V, 0.05)
+# print(x)
+# t = np.zeros(shp)
+#
+# t.T[int(x / 0.05)] = 2*y*np.ones(70)
+# V += t
 
 plt.imshow(V)
 
