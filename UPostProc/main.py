@@ -29,7 +29,9 @@ Cy = Ofpp.parse_internal_field(path + time + '/Cy')  # y-координата э
 Cz = Ofpp.parse_internal_field(path + time + '/Cz')  # z-координата элементов сетки
 
 
-InputData = pd.read_excel("input.xlsx")  # массив заданных точек | shape = (num_of_points, 3)
+InputData = pd.read_csv("input.txt", sep="\t")  # массив заданных точек | shape = (num_of_points, 3)
+# InputData = pd.read_exel("input.xlsx")  # массив заданных точек | shape = (num_of_points, 3)
+
 num_of_points = InputData.shape[0]
 InputData = InputData.T
 
@@ -58,4 +60,5 @@ for point in range(num_of_points):
                                  OutputData.loc[point, "Uy"] ** 2 +
                                  OutputData.loc[point, "Uz"] ** 2) ** 0.5
 
-OutputData.to_excel("output.xlsx")
+OutputData.to_csv("output.txt", sep="\t")
+# OutputData.to_xlsx("output.xlsx")
