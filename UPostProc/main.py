@@ -1,0 +1,54 @@
+import openfoamparser_mai as Ofpp
+import numpy as np
+import pandas as pd
+
+
+"""
+Программа для поиска скоростей в заданных точках.
+До начала выполнения программы необходимо в рабочей папке openfoam выполнить команду
+postProcess -func writeCellCentres
+
+
+Входные данные: 
+path - адресс папки с расчетом openfoam. 
+time - время нужного кейса
+InputData - датафрейм с эксель таблицей заданных точек. Формат смотреть пример.
+
+Выходные данные: 
+OutputData - датафрейм с эксель таблицей искомых скоростей.
+
+"""
+path = '/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/3D/angleSearch/a-10/BlockMesh/h-35/l-50/100CH4-0H2-air-6-step3D/'
+time = '0.00400258'
+
+U = Ofpp.parse_internal_field(path + time + '/U')
+Cx = Ofpp.parse_internal_field(path + time + '/Cx')
+Cy = Ofpp.parse_internal_field(path + time + '/Cy')
+Cz = Ofpp.parse_internal_field(path + time + '/Cz')
+
+
+InputData = pd.read_excel("input.xlsx")
+num_of_points = InputData.shape[0]
+InputData = InputData.T
+OutputData= pd.DataFrame({"X": np.zeros(num_of_points), "Y": np.zeros(num_of_points), "Z": np.zeros(num_of_points),
+                          "Ux": np.zeros(num_of_points), "Uy": np.zeros(num_of_points), "Uz": np.zeros(num_of_points),
+                          "Umag": np.zeros(num_of_points)})
+
+
+for point in range(num_of_points):
+    r0 = InputData[point].array
+
+    residual = (Cx - r0[0]) ** 2 + (Cy - r0[1]) ** 2 + (Cz - r0[2]) ** 2
+    ind = np.argmin(residual)
+
+    OutputData.loc[point, "X"] = Cx[ind]
+    OutputData.loc[point, "Y"] = Cy[ind]
+    OutputData.loc[point, "Z"] = Cz[ind]
+    OutputData.loc[point, "Ux"] = U[ind][0]
+    OutputData.loc[point, "Uy"] = U[ind][1]
+    OutputData.loc[point, "Uz"] = U[ind][2]
+    OutputData.loc[point, "Umag"] = (OutputData.loc[point, "Ux"] ** 2 +
+                                 OutputData.loc[point, "Uy"] ** 2 +
+                                 OutputData.loc[point, "Uz"] ** 2) ** 0.5
+
+OutputData.to_excel("output.xlsx")
