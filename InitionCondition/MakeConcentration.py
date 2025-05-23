@@ -1,3 +1,23 @@
+def make_concentration_H2_air(phi=1):
+    stoichiometric_fuel_air = 0.5
+
+    alpha = 3.762  # 78.084 / 20.946
+
+    X_O2 = stoichiometric_fuel_air /  (2 * (alpha + 1) + phi)
+    X_H2 = 1 - (alpha + 1) * X_O2
+    X_N2 = alpha * X_O2
+
+    M_H2 = 2.0
+    M_O2 = 32.00
+    M_N2 = 28.01
+
+    X = [X_H2, X_O2, X_N2]
+    M = [M_H2, M_O2, M_N2]
+    name = ['H2', 'O2', 'N2']
+    Y = [0] * 3
+    for i in range(3):
+        Y[i] = X[i] * M[i] / (X_H2*M_H2 + X_O2*M_O2 + X_N2*M_N2)
+        print(f'    volScalarFieldValue {name[i]}   ', Y[i])
 
 
 def make_concentration_CH4_H2_air(phi=1, xi=0.05):
@@ -48,4 +68,5 @@ def make_concentration_CH4_air(phi=1):
         print(f'    volScalarFieldValue {name[i]}   ', Y[i])
 
 
-make_concentration_CH4_H2_air(phi=1.0, xi=0.50)
+make_concentration_CH4_H2_air(phi=0.7, xi=0.70)
+make_concentration_H2_air(0.5)

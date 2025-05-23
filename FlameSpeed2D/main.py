@@ -32,8 +32,8 @@ def find_slope_time(path: str, dx: float, shape_of_data: (int, int)) -> (list, l
     return T, slope_time
 
 
-shp = (90, 4000)
-path = '/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/2D/Hele-Shaw/l=200mm,w=4.5mm/ClPhi=1.0Xi=0.5'
+shp = (70, 10000)
+path = '/home/tgd323/OpenFOAM/tgd323-v2406/run/6Step/2D/Hele-Shaw_XZ/l=500mm,w=3.5mm/ClPhi=1.0Xi=1e-6_heatlose'
 dx = 0.05
 T, slope_time = find_slope_time(path, dx, shp)
 

@@ -1,7 +1,7 @@
 import numpy as np
-from find_time_steps import find_time
-from find_data_in_file import find_data_in_file
-from find_slope import find_slope
+from FlameSpeed1D.find_time_steps import find_time
+from FlameSpeed1D.find_data_in_file import find_data_in_file
+from FlameSpeed1D.find_slope import find_slope
 
 
 def find_slope_time(path, n, field_name, dx, writeType='ascii') -> (list, list):
