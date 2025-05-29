@@ -68,12 +68,14 @@ plt.show()
 fig = plt.figure(figsize=(7, 4))
 ax = fig.add_subplot()
 
-ax.plot(*get_calc_real_time_from_log("log.reactingCTDyMFoam"))
-ax.plot(*get_calc_real_time_from_log_mpi("log.mpirun", 6))
+ax.plot(*get_calc_real_time_from_log("log.reactingCTDyMFoam"), label="1 ядро")
+ax.plot(*get_calc_real_time_from_log_mpi("log.mpirun", 6), label="6 ядер")
 
 ax.set_xscale('log')
 ax.set_yscale('log')
 
-ax.set_xlabel("log real")
-ax.set_ylabel("log calc")
+ax.set_xlabel("Расчетное время")
+ax.set_ylabel("Реальное время")
+ax.set_title("Зависимость расчетного времени от реального \n для расчета с 0.5 млн. элементов")
+plt.legend()
 plt.show()
