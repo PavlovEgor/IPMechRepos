@@ -68,5 +68,5 @@ def make_concentration_CH4_air(phi=1):
         print(f'    volScalarFieldValue {name[i]}   ', Y[i])
 
 
-make_concentration_CH4_H2_air(phi=0.7, xi=0.70)
-make_concentration_H2_air(0.5)
+make_concentration_CH4_H2_air(phi=2, xi=0.70)
+# make_concentration_H2_air(0.5)
